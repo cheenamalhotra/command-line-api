@@ -35,6 +35,19 @@ namespace System.CommandLine.Tests
         }
 
         [Fact]
+        public void Option_name_and_aliases_should_be_case_insensitive()
+        {
+            var option = new Option<string>("--original");
+
+            option.AddAlias("--added");
+
+            option.Aliases.Should().Contain("--added");
+            option.HasAlias("--added").Should().BeTrue();
+            option.HasAlias("--aDDed").Should().BeTrue();
+            option.HasAlias("--ORIGINAL").Should().BeTrue();
+        }
+
+        [Fact]
         public void Aliases_is_aware_of_added_alias()
         {
             var option = new Option<string>("--original");
